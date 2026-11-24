@@ -1,0 +1,25 @@
+# /etc/os-patch/patch.conf  (chmod 600, root only). NEVER commit the real file to GitHub.
+
+# --- where scripts come from ---
+REPO_REF="main"                 # branch or tag the servers run (pin a tag for change control)
+GITHUB_TOKEN=""                 # fine-grained PAT, read-only Contents access (private repo over https)
+DEPLOY_KEY=""                   # or: /etc/os-patch/deploy_key (if the repo origin is an ssh URL)
+
+# --- e-mail report ---
+ADMIN_EMAIL="admin@example.com, backup-admin@example.com"
+MAIL_FROM="os-patch@example.com"
+MAIL_METHOD="smtp"              # smtp (uses curl, no local MTA needed) | sendmail
+SMTP_URL="smtps://email-smtp.ap-south-1.amazonaws.com:465"    # Amazon SES SMTP endpoint, or any SMTP server
+SMTP_USER=""
+SMTP_PASS=""
+SUBJECT_PREFIX="[OS-PATCH]"
+
+# --- patch behaviour ---
+PATCH_SCOPE="all"               # all | security
+AUTOREMOVE="true"
+REBOOT_DELAY_MIN=1              # minutes between the report e-mail and the reboot
+REBOOT_ON_FAILURE="true"        # reboot even if patching failed
+MIN_INTERVAL_DAYS=6             # guard: never patch twice within this many days
+MIN_FREE_MB=1024
+UPGRADE_TIMEOUT="90m"
+LOG_RETENTION_DAYS=90
