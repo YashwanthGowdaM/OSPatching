@@ -1,0 +1,17 @@
+name: shellcheck
+
+# Servers run these scripts as root, so never merge a script that has not passed lint.
+# Also enable branch protection on `main` (PR + review required) in the repo settings.
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax check
+        run: for f in *.sh; do bash -n "$f"; done
+      - name: ShellCheck
+        run: shellcheck -x -S warning *.sh
